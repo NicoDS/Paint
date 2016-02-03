@@ -20,10 +20,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private static int DIMENSION_ARRAY = 8;
     
     BufferedImage buffer = null;
-    BufferedImage[] undo = new BufferedImage[DIMENSION_ARRAY];
+
     int indice = 0;
     
-    
+    Circulo[] listaCirculos = new Circulo[DIMENSION_ARRAY];
     /**
      * Creates new form VentanaDibujo
      */
@@ -34,34 +34,28 @@ public class VentanaDibujo extends javax.swing.JFrame {
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.white);
         g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
-        int i = 0;
-        while(i < undo.length){
-            undo[i] = (BufferedImage) jPanel1.createImage(jPanel1.getWidth(), jPanel1.getHeight());
-            undo[i].createGraphics();
-            g2 = (Graphics2D) undo[i].getGraphics();
-            g2.setColor(Color.white);
-            g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
-            i++;
-        }
+        listaCirculos[0].relleno = true;
     }
-    
-    private int calculaBuffer(int n){
-        if(n % DIMENSION_ARRAY < DIMENSION_ARRAY){
-            return n % DIMENSION_ARRAY;
-        }
-        else{
-            return 0;
-        }
-    }
-    
+
     @Override
     public void paint(Graphics g){
         super.paint(g);
-        //Graphics2D g2 = (Graphics2D) buffer.getGraphics();
-        
-        
-        Graphics2D g2 = (Graphics2D) jPanel1.getGraphics();
-        g2.drawImage(undo[calculaBuffer(indice)], 0, 0, jPanel1.getWidth(), jPanel1.getHeight(), null);
+        Graphics2D g2 = (Graphics2D) buffer.getGraphics();
+        g2.setColor(Color.white);
+        g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
+        int j = 0;
+        while(j < indice){
+            g2.setColor(listaCirculos[j].color);
+            if(listaCirculos[j].relleno){
+                g2.fill(listaCirculos[j]);
+            }
+            else{
+                g2.draw(listaCirculos[j]);
+            }
+            j++;
+        }
+        g2 = (Graphics2D) jPanel1.getGraphics();
+        g2.drawImage(buffer, 0, 0, jPanel1.getWidth(), jPanel1.getHeight(), null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,11 +123,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-        Ellipse2D.Double circulo = new Ellipse2D.Double(evt.getX() - 20, evt.getY() - 20, 40, 40);
-        Graphics2D g2 = (Graphics2D) undo[calculaBuffer(indice +1)].getGraphics();
-        g2.drawImage(undo[calculaBuffer(indice)], 0, 0, jPanel1.getWidth(), jPanel1.getHeight(), null);
-        g2.fill(circulo);
-        indice++;
+        listaCirculos[indice] = new Circulo(evt.getX(),evt.getY(), 20, Color.ORANGE, true);
+        if(indice < DIMENSION_ARRAY -1) {
+            indice++;
+        }
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
 
@@ -145,14 +138,14 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        if(calculaBuffer(indice) == 0){
-            
-        }
-        else{
-            indice--;
-        }
-        repaint();
-        
+//        if(calculaBuffer(indice) == 0){
+//            
+//        }
+//        else{
+//            indice--;
+//        }
+//        repaint();
+//        
         
     }//GEN-LAST:event_jButton1MousePressed
 
