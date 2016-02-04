@@ -18,8 +18,8 @@ public class Circulo extends Ellipse2D.Double{
     public boolean relleno = false;
     
     public Circulo(int x, int y, int radius, Color colori, boolean rellenoi){
-        this.x = x;
-        this.y = y;
+        this.x = x - radius/2;
+        this.y = y - radius/2;
         this.width = radius;
         this.height = radius;
         this.color = colori;

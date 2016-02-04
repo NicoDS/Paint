@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,9 +22,11 @@ public class VentanaDibujo extends javax.swing.JFrame {
     
     BufferedImage buffer = null;
 
-    int indice = 0;
     
-    Circulo[] listaCirculos = new Circulo[DIMENSION_ARRAY];
+//    Circulo[] listaCirculos = new Circulo[DIMENSION_ARRAY];
+    
+    ArrayList <Circulo> listaNuevaCirculos = new ArrayList();
+    
     /**
      * Creates new form VentanaDibujo
      */
@@ -34,23 +37,24 @@ public class VentanaDibujo extends javax.swing.JFrame {
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.white);
         g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
-        listaCirculos[0].relleno = true;
+        
     }
 
     @Override
     public void paint(Graphics g){
-        super.paint(g);
+        super.paintComponents(g);
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.white);
         g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
         int j = 0;
-        while(j < indice){
-            g2.setColor(listaCirculos[j].color);
-            if(listaCirculos[j].relleno){
-                g2.fill(listaCirculos[j]);
+        while(j < listaNuevaCirculos.size()){
+            Circulo aux = listaNuevaCirculos.get(j);
+            g2.setColor(aux.color);
+            if(aux.relleno){
+                g2.fill(aux);
             }
             else{
-                g2.draw(listaCirculos[j]);
+                g2.draw(aux);
             }
             j++;
         }
@@ -68,6 +72,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jSlider1 = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +107,29 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Limpiar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton2MousePressed(evt);
+            }
+        });
+
+        jSlider1.setMaximum(300);
+        jSlider1.setMinimum(2);
+        jSlider1.setValue(20);
+        jSlider1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jSlider1MouseDragged(evt);
+            }
+        });
+        jSlider1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jSlider1MousePressed(evt);
+            }
+        });
+
+        jLabel1.setText("20");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,13 +138,24 @@ public class VentanaDibujo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addContainerGap(675, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 366, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jLabel1))
+                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -123,31 +164,44 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-        listaCirculos[indice] = new Circulo(evt.getX(),evt.getY(), 20, Color.ORANGE, true);
-        if(indice < DIMENSION_ARRAY -1) {
-            indice++;
-        }
+        int radio = jSlider1.getValue();
+        listaNuevaCirculos.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
+        
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-//        Ellipse2D.Double circulo = new Ellipse2D.Double(evt.getX() - 20, evt.getY() - 20, 40, 40);
-//        Graphics2D g2 = (Graphics2D) undo[indice].getGraphics();
-//        g2.fill(circulo);
-//        repaint();
+//        listaLineas.add(new Circulo(evt.getX() -10,evt.getY() -10, 20, Color.ORANGE, true));
+//        listaNuevaCirculos.add(listaLineas);
+        int radio = jSlider1.getValue();
+        listaNuevaCirculos.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
+        
+        
+        repaint();
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-//        if(calculaBuffer(indice) == 0){
-//            
-//        }
-//        else{
-//            indice--;
-//        }
-//        repaint();
-//        
+        if(listaNuevaCirculos.size() > 0){
+            listaNuevaCirculos.remove(listaNuevaCirculos.size()-1);
+            repaint();
+        }
+        
+        
         
     }//GEN-LAST:event_jButton1MousePressed
+
+    private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
+       listaNuevaCirculos.clear();
+       repaint();
+    }//GEN-LAST:event_jButton2MousePressed
+
+    private void jSlider1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MousePressed
+        jLabel1.setText(String.valueOf(jSlider1.getValue()));
+    }//GEN-LAST:event_jSlider1MousePressed
+
+    private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
+        jLabel1.setText(String.valueOf(jSlider1.getValue()));
+    }//GEN-LAST:event_jSlider1MouseDragged
 
     /**
      * @param args the command line arguments
@@ -186,6 +240,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSlider jSlider1;
     // End of variables declaration//GEN-END:variables
 }
