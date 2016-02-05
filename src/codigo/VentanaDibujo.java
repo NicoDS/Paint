@@ -8,6 +8,7 @@ package codigo;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,12 +22,12 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private static int DIMENSION_ARRAY = 8;
     
     BufferedImage buffer = null;
-
-    
+    int forma = 0;
+    Color colorElegido = Color.BLACK;
 //    Circulo[] listaCirculos = new Circulo[DIMENSION_ARRAY];
     
-    ArrayList <Circulo> listaNuevaCirculos = new ArrayList();
-    
+//    ArrayList<Circulo> listaNuevaCirculos = new ArrayList();
+    ArrayList listaFormas = new ArrayList();
     /**
      * Creates new form VentanaDibujo
      */
@@ -39,7 +40,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
         
     }
-
+    
     @Override
     public void paint(Graphics g){
         super.paintComponents(g);
@@ -47,14 +48,16 @@ public class VentanaDibujo extends javax.swing.JFrame {
         g2.setColor(Color.white);
         g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
         int j = 0;
-        while(j < listaNuevaCirculos.size()){
-            Circulo aux = listaNuevaCirculos.get(j);
-            g2.setColor(aux.color);
-            if(aux.relleno){
-                g2.fill(aux);
+        while(j < listaFormas.size()){
+            Shape aux;
+            if(listaFormas.get(j) instanceof Circulo){
+                 ((Circulo) listaFormas.get(j)).pintar(g2);
             }
-            else{
-                g2.draw(aux);
+            if(listaFormas.get(j) instanceof Triangulo){
+                 ((Triangulo) listaFormas.get(j)).pintar(g2);
+            }
+            if(listaFormas.get(j) instanceof Cuadrado){
+                 ((Cuadrado) listaFormas.get(j)).pintar(g2);
             }
             j++;
         }
@@ -70,11 +73,53 @@ public class VentanaDibujo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jColorChooser1 = new javax.swing.JColorChooser();
+        BotonAceptar = new javax.swing.JButton();
+        BotonCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        BotonColor = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+
+        BotonAceptar.setText("Aceptar");
+        BotonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BotonAceptarMousePressed(evt);
+            }
+        });
+
+        BotonCancelar.setText("Cancelar");
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addComponent(BotonAceptar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BotonCancelar)
+                .addGap(144, 144, 144))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonAceptar)
+                    .addComponent(BotonCancelar))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,6 +175,34 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
         jLabel1.setText("20");
 
+        jButton3.setText("T");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
+            }
+        });
+
+        jButton4.setText("C");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton4MousePressed(evt);
+            }
+        });
+
+        BotonColor.setText("Color");
+        BotonColor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BotonColorMousePressed(evt);
+            }
+        });
+
+        jButton5.setText("Sq");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton5MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,25 +211,43 @@ public class VentanaDibujo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 366, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)))
+                .addGap(1, 1, 1)
+                .addComponent(BotonColor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)
-                        .addComponent(jLabel1))
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton1)
+                                .addComponent(jButton2)
+                                .addComponent(jLabel1)
+                                .addComponent(BotonColor))
+                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4)))
+                .addGap(11, 11, 11)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -165,24 +256,31 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         int radio = jSlider1.getValue();
-        listaNuevaCirculos.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
-        
+        switch (forma){
+            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
+            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+        }
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
-//        listaLineas.add(new Circulo(evt.getX() -10,evt.getY() -10, 20, Color.ORANGE, true));
+//        listaLineas.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
 //        listaNuevaCirculos.add(listaLineas);
         int radio = jSlider1.getValue();
-        listaNuevaCirculos.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
+        switch (forma){
+            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
+            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+        }
         
         
         repaint();
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        if(listaNuevaCirculos.size() > 0){
-            listaNuevaCirculos.remove(listaNuevaCirculos.size()-1);
+        if(listaFormas.size() > 0){
+            listaFormas.remove(listaFormas.size()-1);
             repaint();
         }
         
@@ -191,7 +289,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MousePressed
 
     private void jButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MousePressed
-       listaNuevaCirculos.clear();
+       listaFormas.clear();
        repaint();
     }//GEN-LAST:event_jButton2MousePressed
 
@@ -202,6 +300,28 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
         jLabel1.setText(String.valueOf(jSlider1.getValue()));
     }//GEN-LAST:event_jSlider1MouseDragged
+
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
+        forma = 1;
+    }//GEN-LAST:event_jButton3MousePressed
+
+    private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
+        forma = 0;
+    }//GEN-LAST:event_jButton4MousePressed
+
+    private void BotonColorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonColorMousePressed
+        jDialog1.setSize(800, 600);
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_BotonColorMousePressed
+
+    private void BotonAceptarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonAceptarMousePressed
+        colorElegido = jColorChooser1.getColor();
+        jDialog1.setVisible(false);
+    }//GEN-LAST:event_BotonAceptarMousePressed
+
+    private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
+        forma = 2;
+    }//GEN-LAST:event_jButton5MousePressed
 
     /**
      * @param args the command line arguments
@@ -239,8 +359,16 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonAceptar;
+    private javax.swing.JButton BotonCancelar;
+    private javax.swing.JButton BotonColor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JColorChooser jColorChooser1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSlider jSlider1;
