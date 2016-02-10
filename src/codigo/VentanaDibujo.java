@@ -62,6 +62,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
             if(listaFormas.get(j) instanceof Rombo){
                  ((Rombo) listaFormas.get(j)).pintar(g2);
             }
+            if(listaFormas.get(j) instanceof Cruz){
+                 ((Cruz) listaFormas.get(j)).pintar(g2);
+            }
             j++;
         }
         g2 = (Graphics2D) jPanel1.getGraphics();
@@ -90,6 +93,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         BotonColor = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         BotonAceptar.setText("Aceptar");
         BotonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -142,7 +146,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 762, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,6 +218,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
         });
 
+        jButton7.setText("Cr");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton7MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,9 +247,11 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7)
+                .addGap(3, 3, 3)
                 .addComponent(BotonColor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -258,7 +271,8 @@ public class VentanaDibujo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
-                            .addComponent(jButton5))
+                            .addComponent(jButton5)
+                            .addComponent(jButton7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
@@ -277,6 +291,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
             case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
         }
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
@@ -290,6 +305,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
             case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
         }
         
         
@@ -345,6 +361,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
         forma = 3;
     }//GEN-LAST:event_jButton6MousePressed
 
+    private void jButton7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MousePressed
+        forma = 4;
+    }//GEN-LAST:event_jButton7MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -390,6 +410,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
