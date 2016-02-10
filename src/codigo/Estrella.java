@@ -16,20 +16,35 @@ import java.awt.Polygon;
 public class Estrella extends Polygon{
     public Color color = null;
     public boolean relleno = false;
-    
     public Estrella(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
         
-        addPoint(x - ancho/2, y - ancho/2);
-        addPoint(x - ancho/2, y - alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y - alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y - ancho/2);
-        addPoint(x + (ancho*2) - ancho/2, y - ancho/2);
-        addPoint(x + (ancho*2) - ancho/2, y + alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y + alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y + (alto*2)- ancho/2);
-        addPoint(x - ancho/2, y + (alto*2)- ancho/2);
-        addPoint(x - ancho/2, y + alto - ancho/2);
-        addPoint(x - ancho - ancho/2, y + alto - ancho/2);
-        addPoint(x - ancho - ancho/2, y - ancho/2);
+        for(int i=0; i< 6; i++){
+            addPoint((int) (x + ancho*Math.cos(i * 2 * Math.PI/5)),
+                    (int) (y + ancho*Math.sin(i *2 * Math.PI/5)));
+        }
+        color = colori;
+        relleno = rellenoi;
+        
+//        addPoint(x, y);
+//        addPoint(x, y);
+//        addPoint(x + (ancho/2), y);
+//        addPoint(x, y );
+//        addPoint(x + (ancho), y);
+//        addPoint(x + (ancho*2) - ancho/2, y + alto - ancho/2);
+//        addPoint(x + ancho - ancho/2, y + alto - ancho/2);
+//        addPoint(x + ancho - ancho/2, y + (alto*2)- ancho/2);
+//        addPoint(x - ancho/2, y + (alto*2)- ancho/2);
+//        addPoint(x - ancho/2, y + alto - ancho/2);
+//        addPoint(x - ancho - ancho/2, y + alto - ancho/2);
+//        addPoint(x - ancho - ancho/2, y - ancho/2);
+    }
+    public void pintar(Graphics2D g2){
+        g2.setColor(this.color);
+            if(this.relleno){
+                g2.fill(this);
+            }
+            else{
+                g2.draw(this);
+            }
     }
 }

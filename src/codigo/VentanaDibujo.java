@@ -49,7 +49,6 @@ public class VentanaDibujo extends javax.swing.JFrame {
         g2.fillRect(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
         int j = 0;
         while(j < listaFormas.size()){
-            Shape aux;
             if(listaFormas.get(j) instanceof Circulo){
                  ((Circulo) listaFormas.get(j)).pintar(g2);
             }
@@ -64,6 +63,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
             if(listaFormas.get(j) instanceof Cruz){
                  ((Cruz) listaFormas.get(j)).pintar(g2);
+            }
+            if(listaFormas.get(j) instanceof Estrella){
+                 ((Estrella) listaFormas.get(j)).pintar(g2);
             }
             j++;
         }
@@ -94,6 +96,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         BotonAceptar.setText("Aceptar");
         BotonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -146,7 +149,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 762, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,6 +228,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
         });
 
+        jButton8.setText("Es");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton8MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,10 +258,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10))
+                    .addComponent(jButton7))
                 .addComponent(BotonColor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                .addGap(217, 217, 217)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -276,7 +289,8 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
-                            .addComponent(jButton6))))
+                            .addComponent(jButton6)
+                            .addComponent(jButton8))))
                 .addGap(11, 11, 11)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -292,6 +306,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
             case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
         }
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
@@ -306,6 +321,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
             case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
         }
         
         
@@ -365,6 +381,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
         forma = 4;
     }//GEN-LAST:event_jButton7MousePressed
 
+    private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
+        forma = 5;
+    }//GEN-LAST:event_jButton8MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -411,6 +431,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
