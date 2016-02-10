@@ -18,10 +18,22 @@ public class Estrella extends Polygon{
     public boolean relleno = false;
     public Estrella(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
         
-        for(int i=0; i< 6; i++){
-            addPoint((int) (x + ancho*Math.cos(i * 2 * Math.PI/5)),
-                    (int) (y + ancho*Math.sin(i *2 * Math.PI/5)));
-        }
+//        for(int i=0; i< 6; i++){
+//            addPoint((int) (x + ancho*Math.cos(i * 2 * Math.PI/5)),
+//                    (int) (y + ancho*Math.sin(i *2 * Math.PI/5)));
+//        }
+        addPoint((int) (x + ancho*Math.cos(0 * 2 * Math.PI/5)),
+                    (int) (y + ancho*Math.sin(0 *2 * Math.PI/5)));
+        addPoint((int) (x + ancho*Math.cos(2 * 2 * Math.PI/5)),
+                    (int) (y + ancho*Math.sin(2 *2 * Math.PI/5)));
+        addPoint((int) (x + ancho*Math.cos(4 * 2 * Math.PI/5)),
+                    (int) (y + ancho*Math.sin(4 *2 * Math.PI/5)));
+        addPoint((int) (x + ancho*Math.cos(1 * 2 * Math.PI/5)),
+                    (int) (y + ancho*Math.sin(1 *2 * Math.PI/5)));
+        addPoint((int) (x + ancho*Math.cos(3 * 2 * Math.PI/5)),
+                    (int) (y + ancho*Math.sin(3 *2 * Math.PI/5)));
+
+        
         color = colori;
         relleno = rellenoi;
         

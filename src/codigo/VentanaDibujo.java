@@ -41,6 +41,20 @@ public class VentanaDibujo extends javax.swing.JFrame {
         
     }
     
+    private boolean chequeaPunto(int x, int y){
+        boolean contiene = false;
+        int j = 0;
+        while(j < listaFormas.size()){
+            if(((Shape) listaFormas.get(j)).contains(x,y)){
+               contiene = true; 
+            }
+            
+            j++;
+        }
+        return contiene;
+        
+    }
+    
     @Override
     public void paint(Graphics g){
         super.paintComponents(g);
@@ -299,6 +313,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        if(chequeaPunto(evt.getX(),evt.getY())){
+            System.out.println("Hay algo");
+        }
+        else{
         int radio = jSlider1.getValue();
         switch (forma){
             case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
@@ -308,6 +326,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
             case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
             case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
         }
+                }
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
 
