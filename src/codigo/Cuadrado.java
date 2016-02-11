@@ -16,21 +16,24 @@ import java.awt.Polygon;
 public class Cuadrado extends Polygon{
     public Color color = null;
     public boolean relleno = false;
+    public int ancho = 0;
+    public int alto = 0;
     
-    public Cuadrado(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
+    public Cuadrado(int x, int y, int altoi, int anchoi, Color colori, boolean rellenoi){
         this.npoints = 4;
+        ancho = anchoi;
+        alto = altoi;
+        this.xpoints[0] = x;
+        this.ypoints[0] = y;
         
-        this.xpoints[0] = x - ancho/2;
-        this.ypoints[0] = y - ancho/2;
+        this.xpoints[1] = xpoints[0] + ancho;
+        this.ypoints[1] = ypoints[0];
         
-        this.xpoints[1] = x - ancho/2;
-        this.ypoints[1] = y + alto - ancho/2;
+        this.xpoints[2] = xpoints[0] + ancho;
+        this.ypoints[2] = ypoints[0] + alto;
         
-        this.xpoints[2] = x + ancho - ancho/2;
-        this.ypoints[2] = y + alto - ancho/2;
-        
-        this.xpoints[3] = x + ancho - ancho/2;
-        this.ypoints[3] = y - ancho/2;
+        this.xpoints[3] = xpoints[0];
+        this.ypoints[3] = ypoints[0] + alto;
         
         this.color = colori;
         this.relleno = rellenoi;

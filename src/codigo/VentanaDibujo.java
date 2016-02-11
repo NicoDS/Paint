@@ -24,6 +24,11 @@ public class VentanaDibujo extends javax.swing.JFrame {
     BufferedImage buffer = null;
     int forma = 0;
     Color colorElegido = Color.BLACK;
+    boolean seleccionar = false;
+    boolean a = false;
+    int posx = 0;
+    int posy = 0;
+    
 //    Circulo[] listaCirculos = new Circulo[DIMENSION_ARRAY];
     
 //    ArrayList<Circulo> listaNuevaCirculos = new ArrayList();
@@ -111,6 +116,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         BotonAceptar.setText("Aceptar");
         BotonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -249,6 +255,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton1.setText("Seleccionar");
+        jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jToggleButton1MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,7 +291,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addGap(10, 10, 10))
                     .addComponent(jButton7))
                 .addComponent(BotonColor)
-                .addGap(217, 217, 217)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButton1)
+                .addGap(94, 94, 94)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -293,7 +308,8 @@ public class VentanaDibujo extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addComponent(jButton2)
                                 .addComponent(jLabel1)
-                                .addComponent(BotonColor))
+                                .addComponent(BotonColor)
+                                .addComponent(jToggleButton1))
                             .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -313,37 +329,88 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-        if(chequeaPunto(evt.getX(),evt.getY())){
-            System.out.println("Hay algo");
-        }
-        else{
-        int radio = jSlider1.getValue();
+        posx= evt.getX();
+        posy= evt.getY();
         switch (forma){
-            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
-            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), 1, colorElegido, true)); break;
+            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
+            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
+            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
+            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
+            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
         }
-                }
+
+
+
+//        if(chequeaPunto(evt.getX(),evt.getY())){
+//            System.out.println("Hay algo");
+//        }
+//        else{
+//        int radio = jSlider1.getValue();
+//        switch (forma){
+//            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
+//            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//        }
+//                }
         repaint();
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
 //        listaLineas.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
 //        listaNuevaCirculos.add(listaLineas);
-        int radio = jSlider1.getValue();
-        switch (forma){
-            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
-            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
-            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+        
+        switch(forma){
+            case 0:{
+                Circulo aux = (Circulo) listaFormas.get(listaFormas.size() -1);
+                int radio = 1;
+                if(evt.getX() > (int) posx){
+                    radio = (int) (evt.getX() - aux.x);
+                    aux.width = radio;
+                    aux.height = radio;
+                }
+                else{
+                    radio = (int) (posx - aux.x);                                                      
+                    aux.x = evt.getX();
+                    aux.y = evt.getY();
+                    aux.width = Math.abs(radio);
+                    aux.height = Math.abs(radio);
+                }
+                
+            }break;
+                case 2:{
+                Cuadrado aux = (Cuadrado) listaFormas.get(listaFormas.size() -1);
+                int radio = 1;
+                if(evt.getX() > (int) posx){
+                    radio = (int) (evt.getX() - aux.xpoints[0]);
+                    aux.ancho = radio;
+                    aux.alto = radio;
+                }
+                else{
+                    radio = (int) (posx - aux.xpoints[0]);                                                      
+                    aux.xpoints[0] = evt.getX();
+                    aux.ypoints[0] = evt.getY();
+                    aux.ancho = Math.abs(radio);
+                    aux.alto = Math.abs(radio);
+                }
+                
+            }break;
         }
         
-        
+//        int radio = jSlider1.getValue();
+//        switch (forma){
+//            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), radio, colorElegido, true)); break;
+//            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), radio, radio, colorElegido, true)); break;
+//        }
+//        
+//        
         repaint();
     }//GEN-LAST:event_jPanel1MouseDragged
 
@@ -404,6 +471,15 @@ public class VentanaDibujo extends javax.swing.JFrame {
         forma = 5;
     }//GEN-LAST:event_jButton8MousePressed
 
+    private void jToggleButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MousePressed
+        if(seleccionar){
+            seleccionar = false;
+        }
+        else{
+            seleccionar = true;
+        }
+    }//GEN-LAST:event_jToggleButton1MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -456,5 +532,6 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSlider jSlider1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
