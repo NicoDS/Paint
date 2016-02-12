@@ -20,14 +20,14 @@ public class Triangulo extends Polygon{
     public Triangulo(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
         this.npoints = 3;
         
-        this.xpoints[0] = x -ancho/2;
-        this.ypoints[0] = y + alto/2;
+        this.xpoints[0] = x;
+        this.ypoints[0] = y;
         
-        this.xpoints[1] = x ;
-        this.ypoints[1] = y - alto/2;
+        this.xpoints[1] = x + ancho ;
+        this.ypoints[1] = y;
         
         this.xpoints[2] = x + ancho/2;
-        this.ypoints[2] = y + alto/2;
+        this.ypoints[2] = y + alto;
         
         this.color = colori;
         this.relleno = rellenoi;

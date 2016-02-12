@@ -16,8 +16,11 @@ import java.awt.Polygon;
 public class Estrella extends Polygon{
     public Color color = null;
     public boolean relleno = false;
+    public int puntoInicioX = 0;
+    public int puntoInicioY = 0;
     public Estrella(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
-        
+        puntoInicioX = x;
+        puntoInicioY = y;
 //        for(int i=0; i< 6; i++){
 //            addPoint((int) (x + ancho*Math.cos(i * 2 * Math.PI/5)),
 //                    (int) (y + ancho*Math.sin(i *2 * Math.PI/5)));

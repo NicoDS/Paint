@@ -16,21 +16,25 @@ import java.awt.Polygon;
 public class Cruz extends Polygon{
     public Color color = null;
     public boolean relleno = false;
+    public int puntoInicioX = 0;
+    public int puntoInicioY = 0;
     
     public Cruz(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
+        puntoInicioX = x;
+        puntoInicioY = y;
+        addPoint(x, y );
+        addPoint(x, y - alto );
+        addPoint(x + ancho , y - alto );
+        addPoint(x + ancho , y );
+        addPoint(x + (ancho*2) , y );
+        addPoint(x + (ancho*2) , y + alto);
+        addPoint(x + ancho, y + alto );
+        addPoint(x + ancho , y + (alto*2));
+        addPoint(x , y + (alto*2));
+        addPoint(x , y + alto );
+        addPoint(x - ancho , y + alto );
+        addPoint(x - ancho , y );
         
-        addPoint(x - ancho/2, y - ancho/2);
-        addPoint(x - ancho/2, y - alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y - alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y - ancho/2);
-        addPoint(x + (ancho*2) - ancho/2, y - ancho/2);
-        addPoint(x + (ancho*2) - ancho/2, y + alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y + alto - ancho/2);
-        addPoint(x + ancho - ancho/2, y + (alto*2)- ancho/2);
-        addPoint(x - ancho/2, y + (alto*2)- ancho/2);
-        addPoint(x - ancho/2, y + alto - ancho/2);
-        addPoint(x - ancho - ancho/2, y + alto - ancho/2);
-        addPoint(x - ancho - ancho/2, y - ancho/2);
         
 //        this.xpoints[0] = x - ancho/2;
 //        this.ypoints[0] = y - ancho/2;

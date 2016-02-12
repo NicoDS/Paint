@@ -20,17 +20,17 @@ public class Rombo extends Polygon{
     public Rombo(int x, int y, int alto, int ancho, Color colori, boolean rellenoi){
         this.npoints = 4;
         
-        this.xpoints[0] = x;
-        this.ypoints[0] = y - ancho/2;
+        this.xpoints[0] = x + ancho/2;
+        this.ypoints[0] = y;
         
-        this.xpoints[1] = x - ancho/2;
-        this.ypoints[1] = y;
+        this.xpoints[1] = x;
+        this.ypoints[1] = y + alto/2;
         
-        this.xpoints[2] = x;
-        this.ypoints[2] = y + alto - ancho/2;
+        this.xpoints[2] = x + ancho/2;
+        this.ypoints[2] = y + alto;
         
-        this.xpoints[3] = x + ancho - ancho/2;
-        this.ypoints[3] = y;
+        this.xpoints[3] = x + ancho;
+        this.ypoints[3] = y + alto/2;
         
         this.color = colori;
         this.relleno = rellenoi;

@@ -26,14 +26,14 @@ public class Cuadrado extends Polygon{
         this.xpoints[0] = x;
         this.ypoints[0] = y;
         
-        this.xpoints[1] = xpoints[0] + ancho;
-        this.ypoints[1] = ypoints[0];
+        this.xpoints[1] = x + ancho;
+        this.ypoints[1] = y;
         
-        this.xpoints[2] = xpoints[0] + ancho;
-        this.ypoints[2] = ypoints[0] + alto;
+        this.xpoints[2] = x + ancho;
+        this.ypoints[2] = y + alto;
         
-        this.xpoints[3] = xpoints[0];
-        this.ypoints[3] = ypoints[0] + alto;
+        this.xpoints[3] = x;
+        this.ypoints[3] = y + alto;
         
         this.color = colori;
         this.relleno = rellenoi;

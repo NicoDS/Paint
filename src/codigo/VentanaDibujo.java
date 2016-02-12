@@ -26,8 +26,12 @@ public class VentanaDibujo extends javax.swing.JFrame {
     Color colorElegido = Color.BLACK;
     boolean seleccionar = false;
     boolean a = false;
+    boolean rellenar = false;
     int posx = 0;
     int posy = 0;
+    int puntoX = 0;
+    int puntoY = 0;
+    int i = 0;
     
 //    Circulo[] listaCirculos = new Circulo[DIMENSION_ARRAY];
     
@@ -117,6 +121,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
 
         BotonAceptar.setText("Aceptar");
         BotonAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -262,6 +267,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton2.setText("Rellenar");
+        jToggleButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jToggleButton2MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,13 +297,14 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10))
-                    .addComponent(jButton7))
-                .addComponent(BotonColor)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotonColor, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jToggleButton1)
                 .addGap(94, 94, 94)
                 .addComponent(jButton2)
@@ -308,19 +321,20 @@ public class VentanaDibujo extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addComponent(jButton2)
                                 .addComponent(jLabel1)
-                                .addComponent(BotonColor)
                                 .addComponent(jToggleButton1))
                             .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
                             .addComponent(jButton5)
-                            .addComponent(jButton7))
+                            .addComponent(jButton7)
+                            .addComponent(BotonColor))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
                             .addComponent(jButton6)
-                            .addComponent(jButton8))))
+                            .addComponent(jButton8)
+                            .addComponent(jToggleButton2))))
                 .addGap(11, 11, 11)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -331,13 +345,51 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         posx= evt.getX();
         posy= evt.getY();
-        switch (forma){
-            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), 1, colorElegido, true)); break;
-            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
-            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
-            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
-            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
-            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), 1, 1, colorElegido, true)); break;
+        i = 0;
+        if(rellenar){
+            if(chequeaPunto(evt.getX(),evt.getY())){
+            int j = 0;
+        while(j < listaFormas.size()){
+            if(((Shape) listaFormas.get(j)).contains(evt.getX(),evt.getY())){
+               if(listaFormas.get(j) instanceof Circulo){
+                 ((Circulo) listaFormas.get(j)).relleno = true;
+                 ((Circulo) listaFormas.get(j)).color = colorElegido;
+            }
+            if(listaFormas.get(j) instanceof Triangulo){
+                 ((Triangulo) listaFormas.get(j)).relleno = true;
+                 ((Triangulo) listaFormas.get(j)).color = colorElegido;
+            }
+            if(listaFormas.get(j) instanceof Cuadrado){
+                 ((Cuadrado) listaFormas.get(j)).relleno = true;
+                 ((Cuadrado) listaFormas.get(j)).color = colorElegido;
+            }
+            if(listaFormas.get(j) instanceof Rombo){
+                 ((Rombo) listaFormas.get(j)).relleno = true;
+                 ((Rombo) listaFormas.get(j)).color = colorElegido;
+            }
+            if(listaFormas.get(j) instanceof Cruz){
+                 ((Cruz) listaFormas.get(j)).relleno = true;
+                 ((Cruz) listaFormas.get(j)).color = colorElegido;
+            }
+            if(listaFormas.get(j) instanceof Estrella){
+                 ((Estrella) listaFormas.get(j)).relleno = true;
+                 ((Estrella) listaFormas.get(j)).color = colorElegido;
+            }
+            }
+            
+            j++;
+        }
+        }
+        }
+        else{
+            switch (forma){
+            case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), 1, colorElegido, false)); break;
+            case 1 : listaFormas.add(new Triangulo(evt.getX(),evt.getY(), 1, 1, colorElegido, false)); break;
+            case 2 : listaFormas.add(new Cuadrado(evt.getX(),evt.getY(), 1, 1, colorElegido, false)); break;
+            case 3 : listaFormas.add(new Rombo(evt.getX(),evt.getY(), 1, 1, colorElegido, false)); break;
+            case 4 : listaFormas.add(new Cruz(evt.getX(),evt.getY(), 1, 1, colorElegido, false)); break;
+            case 5 : listaFormas.add(new Estrella(evt.getX(),evt.getY(), 1, 1, colorElegido, false)); break;
+            }
         }
 
 
@@ -362,40 +414,136 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
 //        listaLineas.add(new Circulo(evt.getX(),evt.getY(), radio, Color.ORANGE, true));
 //        listaNuevaCirculos.add(listaLineas);
-        
+        if(!rellenar){
         switch(forma){
             case 0:{
                 Circulo aux = (Circulo) listaFormas.get(listaFormas.size() -1);
-                int radio = 1;
+                int ancho = 1;
+                int alto = 1;
                 if(evt.getX() > (int) posx){
-                    radio = (int) (evt.getX() - aux.x);
-                    aux.width = radio;
-                    aux.height = radio;
+                    ancho = (int) (evt.getX() - aux.x);
+                    alto = (int) (evt.getY() - aux.y);
+                    aux.width = ancho;
+                    aux.height = alto;
                 }
                 else{
-                    radio = (int) (posx - aux.x);                                                      
+                    ancho = (int) (posx - aux.x);
+                    alto = (int) (posy - aux.y);    
                     aux.x = evt.getX();
                     aux.y = evt.getY();
-                    aux.width = Math.abs(radio);
-                    aux.height = Math.abs(radio);
+                    aux.width = Math.abs(ancho);
+                    aux.height = Math.abs(alto);
                 }
+                
+            }break;
+                case 1:{
+                Triangulo aux = (Triangulo) listaFormas.get(listaFormas.size() -1);
+                int ancho = 1;
+                int alto = 1;
+                int puntoX = aux.xpoints[0];
+                int puntoY = aux.ypoints[0];
+                ancho = (int) (evt.getX() - puntoX);
+                alto = (int) (evt.getY() - puntoY);
+                aux.xpoints[1] = puntoX + ancho;
+                    
+                aux.xpoints[2] = puntoX + ancho/2;
+                aux.ypoints[2] = puntoY + alto;
+                
+                
                 
             }break;
                 case 2:{
                 Cuadrado aux = (Cuadrado) listaFormas.get(listaFormas.size() -1);
-                int radio = 1;
-                if(evt.getX() > (int) posx){
-                    radio = (int) (evt.getX() - aux.xpoints[0]);
-                    aux.ancho = radio;
-                    aux.alto = radio;
+                int ancho = 1;
+                int alto = 1;
+                int puntoX = aux.xpoints[0];
+                int puntoY = aux.ypoints[0];
+                ancho = (int) (evt.getX() - puntoX);
+                alto = (int) (evt.getY() - puntoY);
+                aux.xpoints[1] = puntoX + ancho;
+                    
+                aux.xpoints[2] = puntoX + ancho;
+                aux.ypoints[2] = puntoY + alto;
+                    
+                aux.ypoints[3] = puntoY + alto;
+                    
+                
+            }break;
+                case 3:{
+                
+                
+                Rombo aux = (Rombo) listaFormas.get(listaFormas.size() -1);
+                int ancho = 1;
+                int alto = 1;
+                if(i == 0){
+                    puntoX = aux.xpoints[0];
+                    puntoY = aux.ypoints[0];
+                    i++;
                 }
-                else{
-                    radio = (int) (posx - aux.xpoints[0]);                                                      
-                    aux.xpoints[0] = evt.getX();
-                    aux.ypoints[0] = evt.getY();
-                    aux.ancho = Math.abs(radio);
-                    aux.alto = Math.abs(radio);
+                ancho = (int) (evt.getX() - puntoX);
+                alto = (int) (evt.getY() - puntoY);
+                aux.xpoints[0] = puntoX + (ancho/2);
+                
+                aux.ypoints[1] = puntoY + (alto/2);
+                
+                aux.xpoints[2] = puntoX + (ancho/2);
+                aux.ypoints[2] = puntoY + alto;
+                    
+                aux.xpoints[3] = puntoX + ancho;
+                aux.ypoints[3] = puntoY + (alto/2);
+                    
+                
+            }break;
+            case 4:{
+                
+                
+                Cruz aux = (Cruz) listaFormas.get(listaFormas.size() -1);
+                int ancho = 1;
+                int alto = 1;
+                if(i == 0){
+                    puntoX = aux.puntoInicioX;
+                    puntoY = aux.puntoInicioY;
+                    i++;
                 }
+                
+                ancho = (int) (evt.getX() - puntoX);
+                alto = (int) (evt.getY() - puntoY);
+                aux.reset();
+                aux.addPoint(puntoX, puntoY);
+                aux.addPoint(puntoX, puntoY - alto);
+                aux.addPoint(puntoX + ancho, puntoY - alto);
+                aux.addPoint(puntoX + ancho, puntoY);
+                aux.addPoint(puntoX + (ancho*2), puntoY);
+                aux.addPoint(puntoX + (ancho*2), puntoY + alto);
+                aux.addPoint(puntoX + ancho, puntoY + alto);
+                aux.addPoint(puntoX + ancho, puntoY + (alto*2));
+                aux.addPoint(puntoX, puntoY + (alto*2));
+                aux.addPoint(puntoX, puntoY + alto);
+                aux.addPoint(puntoX - ancho, puntoY + alto);
+                aux.addPoint(puntoX - ancho, puntoY);
+            }break;
+                case 5:{
+                Estrella aux = (Estrella) listaFormas.get(listaFormas.size() -1);
+                int ancho = 1;
+                int alto = 1;
+                if(i == 0){
+                    puntoX = aux.puntoInicioX;
+                    puntoY = aux.puntoInicioY;
+                    i++;
+                }
+                ancho = (int) (evt.getX() - puntoX);
+                alto = (int) (evt.getY() - puntoY);
+                aux.reset();
+                aux.addPoint((int) (puntoX + ancho*Math.cos(0 * 2 * Math.PI/5)),
+                    (int) (puntoY + alto*Math.sin(0 *2 * Math.PI/5)));
+                aux.addPoint((int) (puntoX + ancho*Math.cos(2 * 2 * Math.PI/5)),
+                    (int) (puntoY + alto*Math.sin(2 *2 * Math.PI/5)));
+                aux.addPoint((int) (puntoX + ancho*Math.cos(4 * 2 * Math.PI/5)),
+                    (int) (puntoY + alto*Math.sin(4 *2 * Math.PI/5)));
+                aux.addPoint((int) (puntoX + ancho*Math.cos(1 * 2 * Math.PI/5)),
+                    (int) (puntoY + alto*Math.sin(1 *2 * Math.PI/5)));
+                aux.addPoint((int) (puntoX + ancho*Math.cos(3 * 2 * Math.PI/5)),
+                    (int) (puntoY + alto*Math.sin(3 *2 * Math.PI/5)));
                 
             }break;
         }
@@ -412,6 +560,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
 //        
 //        
         repaint();
+        }
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
@@ -480,6 +629,15 @@ public class VentanaDibujo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jToggleButton1MousePressed
 
+    private void jToggleButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton2MousePressed
+        if(rellenar){
+            rellenar = false;
+        }
+        else{
+            rellenar = true;
+        }
+    }//GEN-LAST:event_jToggleButton2MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -533,5 +691,6 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }
