@@ -11,7 +11,7 @@ import java.awt.Polygon;
 
 /**
  *
- * @author Administrator
+ * @author:Nicolás Domínguez Smeed 1º DAM
  */
 public class Cuadrado extends Polygon{
     public Color color = null;
@@ -19,10 +19,11 @@ public class Cuadrado extends Polygon{
     public int ancho = 0;
     public int alto = 0;
     
-    public Cuadrado(int x, int y, int altoi, int anchoi, Color colori, boolean rellenoi){
+    public Cuadrado(int x, int y, int alto, int ancho, Color color, boolean relleno){
+        
         this.npoints = 4;
-        ancho = anchoi;
-        alto = altoi;
+        ancho = ancho;
+        alto = alto;
         this.xpoints[0] = x;
         this.ypoints[0] = y;
         
@@ -35,10 +36,11 @@ public class Cuadrado extends Polygon{
         this.xpoints[3] = x;
         this.ypoints[3] = y + alto;
         
-        this.color = colori;
-        this.relleno = rellenoi;
+        this.color = color;
+        this.relleno = relleno;
     }
-    public void pintar(Graphics2D g2){
+    
+    public void pintaYColorea (Graphics2D g2){
         g2.setColor(this.color);
             if(this.relleno){
                 g2.fill(this);

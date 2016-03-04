@@ -11,22 +11,23 @@ import java.awt.geom.Ellipse2D;
 
 /**
  *
- * @author Carlos Hernández
+ * @author:Nicolás Domínguez Smeed 1º DAM
  */
 public class Circulo extends Ellipse2D.Double{
     
     public Color color = null;
     public boolean relleno = false;
     
-    public Circulo(int x, int y, int radio, Color colori, boolean rellenoi){
-        this.x = x;
-        this.y = y;
+     public Circulo (int x, int y, int radio,  Color color, boolean relleno){
+        this.x = x - radio/2;
+        this.y = y - radio/2;
         this.width = radio;
         this.height = radio;
-        this.color = colori;
-        this.relleno = rellenoi;
+        this.color = color;
+        this.relleno = relleno;
+
     }
-    public void pintar(Graphics2D g2){
+    public void pintaYColorea (Graphics2D g2){
         g2.setColor(this.color);
             if(this.relleno){
                 g2.fill(this);
