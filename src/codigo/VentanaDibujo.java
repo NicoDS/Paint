@@ -26,11 +26,7 @@ import javax.swing.ImageIcon;
  * @author:Nicolás Domínguez Smeed 1º DAM
  */
 public class VentanaDibujo extends javax.swing.JFrame {
-   
-        //creamos una variable de tipo linea
-    //para guardar la linea que dibuja el usuario
-    Line2D.Double linea = new Line2D.Double();
-
+  
     private static int DIMENSION_ARRAY = 8;
     //imagen en la que pintaré los círculos
     //es una variable parecida a un Image pero acelerado    
@@ -58,17 +54,15 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
 
  Color colorFondo = Color.WHITE;
-//comentario pa comit
-//variables para almacenar la posición en la que se empieza a dibujar la figura
+
+//variables para almacenar la posición en la que empieza a dibujar la figura
     int puntoX = 0;
     int puntoY = 0;
     
     
     int k = 0;
     
-//    Circulo[] listaCirculos = new Círculo[DIMENSION_ARRAY];
-    
-//    ArrayList<Circulo> listaNuevaCirculos = new ArrayList();
+
     ArrayList listaFormas = new ArrayList();
     /**
      * Creates new form VentanaDibujo
@@ -80,8 +74,12 @@ public class VentanaDibujo extends javax.swing.JFrame {
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(colorFondo);
         g2.fillRect(0, 0, pizarra.getWidth(), pizarra.getHeight());
+       
+        //Añade el título Paint
         setTitle("Paint");
+        //No te permite agrandar el paint
         setResizable(false);
+         //cambia el icono de java por uno que añado
         setIconImage(new ImageIcon(getClass().getResource("/paint.JPG")).getImage());
         
     }
@@ -153,7 +151,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
         jDialog2 = new javax.swing.JDialog();
         jFileChooser1 = new javax.swing.JFileChooser();
         pizarra = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        deshacer = new javax.swing.JButton();
         borrar_todo = new javax.swing.JButton();
         jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
@@ -164,8 +162,8 @@ public class VentanaDibujo extends javax.swing.JFrame {
         rombo = new javax.swing.JButton();
         cruz = new javax.swing.JButton();
         estrella = new javax.swing.JButton();
-        relleno = new javax.swing.JToggleButton();
         Recta = new javax.swing.JButton();
+        relleno = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         archivo = new javax.swing.JMenu();
         guardar = new javax.swing.JMenuItem();
@@ -239,10 +237,10 @@ public class VentanaDibujo extends javax.swing.JFrame {
             .addGap(0, 545, Short.MAX_VALUE)
         );
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/deshacer.JPG"))); // NOI18N
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        deshacer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/deshacer.JPG"))); // NOI18N
+        deshacer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
+                deshacerMousePressed(evt);
             }
         });
 
@@ -319,17 +317,17 @@ public class VentanaDibujo extends javax.swing.JFrame {
             }
         });
 
-        relleno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rellenar.JPG"))); // NOI18N
-        relleno.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                rellenoMousePressed(evt);
-            }
-        });
-
         Recta.setText("Recta");
         Recta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 RectaMousePressed(evt);
+            }
+        });
+
+        relleno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rellenar.JPG"))); // NOI18N
+        relleno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                rellenoMousePressed(evt);
             }
         });
 
@@ -356,7 +354,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -377,9 +375,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addComponent(Recta)
                         .addGap(18, 18, 18)
                         .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(relleno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                        .addGap(49, 49, 49)
+                        .addComponent(relleno, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
                         .addComponent(borrar_todo)
                         .addGap(2, 2, 2))
                     .addGroup(layout.createSequentialGroup()
@@ -398,14 +396,14 @@ public class VentanaDibujo extends javax.swing.JFrame {
                         .addComponent(rombo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(triangulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cuadrado, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(relleno)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(borrar_todo)
                         .addComponent(jLabel1)
                         .addComponent(color)
-                        .addComponent(Recta))
+                        .addComponent(Recta)
+                        .addComponent(relleno))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(deshacer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(jSlider1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(24, 24, 24)
                 .addComponent(pizarra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -457,6 +455,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
                 colorFondo = colorElegido;
             }
         }
+         //Figuras sin relleno por defecto 
         else{
             switch (forma){
             case 0 : listaFormas.add(new Circulo(evt.getX(),evt.getY(), 1, colorElegido, false)); break;
@@ -481,6 +480,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
             
             case 0:{
                 Circulo aux = (Circulo) listaFormas.get(listaFormas.size() -1);
+                
                 int ancho = 1;
                 int alto = 1;
                 if(evt.getX() > (int) posx){
@@ -508,7 +508,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
                 ancho = (int) (evt.getX() - puntoX);
                 alto = (int) (evt.getY() - puntoY);
                 aux.xpoints[1] = puntoX + ancho;
-   //             aux.ypoints[1] = puntoY + alto;  //Para tener un triángulo inclinado
+                  //aux.ypoints[1] = puntoY + alto;  //Para tener un triángulo inclinado
                 aux.xpoints[2] = puntoX + ancho/2;
                 aux.ypoints[2] = puntoY + alto;
                 
@@ -641,15 +641,13 @@ public class VentanaDibujo extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pizarraMouseDragged
 
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+    private void deshacerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deshacerMousePressed
         if(listaFormas.size() > 0){
             listaFormas.remove(listaFormas.size()-1);
             repaint();
         }
-        
-        
-        
-    }//GEN-LAST:event_jButton1MousePressed
+ 
+    }//GEN-LAST:event_deshacerMousePressed
 
     private void borrar_todoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrar_todoMousePressed
        listaFormas.clear();
@@ -699,15 +697,6 @@ public class VentanaDibujo extends javax.swing.JFrame {
         forma = 5;
     }//GEN-LAST:event_estrellaMousePressed
 
-    private void rellenoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rellenoMousePressed
-        if(rellenar){
-            rellenar = false;
-        }
-        else{
-            rellenar = true;
-        }
-    }//GEN-LAST:event_rellenoMousePressed
-
     private void guardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_guardarMousePressed
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("archivos de imagenes jpg","jpg"));
         jFileChooser1.setFileFilter( new FileNameExtensionFilter("archivos de imagenes png","png"));
@@ -733,6 +722,15 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private void RectaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RectaMousePressed
           forma = 6;
     }//GEN-LAST:event_RectaMousePressed
+
+    private void rellenoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rellenoMousePressed
+                if(rellenar){
+            rellenar = false;
+        }
+        else{
+            rellenar = true;
+        }
+    }//GEN-LAST:event_rellenoMousePressed
 
     /**
      * @param args the command line arguments
@@ -766,7 +764,8 @@ public class VentanaDibujo extends javax.swing.JFrame {
             public void run() {
                 new VentanaDibujo().setVisible(true);
             }
-        });
+        }
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -779,9 +778,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JButton color;
     private javax.swing.JButton cruz;
     private javax.swing.JButton cuadrado;
+    private javax.swing.JButton deshacer;
     private javax.swing.JButton estrella;
     private javax.swing.JMenuItem guardar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -790,7 +789,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JPanel pizarra;
-    private javax.swing.JToggleButton relleno;
+    private javax.swing.JButton relleno;
     private javax.swing.JButton rombo;
     private javax.swing.JButton triangulo;
     // End of variables declaration//GEN-END:variables
