@@ -58,7 +58,7 @@ public class VentanaDibujo extends javax.swing.JFrame {
 
 
  Color colorFondo = Color.WHITE;
-
+//comentario pa comit
 //variables para almacenar la posición en la que se empieza a dibujar la figura
     int puntoX = 0;
     int puntoY = 0;
