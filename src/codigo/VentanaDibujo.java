@@ -724,8 +724,9 @@ public class VentanaDibujo extends javax.swing.JFrame {
     }//GEN-LAST:event_RectaMousePressed
 
     private void rellenoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rellenoMousePressed
-                if(rellenar){
-            rellenar = false;
+    if(rellenar){
+       
+       rellenar = false;
         }
         else{
             rellenar = true;
